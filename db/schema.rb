@@ -10,25 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_08_212944) do
+ActiveRecord::Schema.define(version: 2019_07_08_212749) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
   end
 
   create_table "forums", force: :cascade do |t|
-    t.integer "user_id"
     t.integer "book_id"
     t.string "forum_title"
     t.string "content"
   end
 
-  create_table "forums_books", force: :cascade do |t|
-    t.integer "book_id"
-    t.integer "forum_id"
-  end
-
-  create_table "mamberships", force: :cascade do |t|
+  create_table "memberships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "forum_id"
   end
