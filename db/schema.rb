@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_08_212749) do
+ActiveRecord::Schema.define(version: 2019_07_09_205404) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "forum_id"
+    t.string "contributions"
   end
 
   create_table "forums", force: :cascade do |t|

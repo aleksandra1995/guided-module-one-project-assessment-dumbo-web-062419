@@ -117,7 +117,7 @@ end
 
 def new_forum_to_forums_table(new_forum,new_content,new_book)
     @current_user.forums << Forum.create(forum_title: new_forum, content: new_content, book_id: new_book.id)
-    binding.pry
+    
 end
 
 # def new_book_to_books_table
@@ -133,15 +133,34 @@ def all_my_forums
       
      choices = @current_user.forums.map {|forum| forum.forum_title}
      selected_forum = @prompt.select("Here is a list of all of your forums", choices)
-
+     selected_forum_id = Forum.find_by(forum_title: selected_forum).id
+    
     @prompt.select ("What would you like to do?:") do |menu|
-        menu.choice "1 -Add comment", -> {add_comment_to_my_forum}
-        menu.choice "2 -Remove comment", -> {remove_comment_from_my_forum}
+        menu.choice "1 -Add comment", -> do 
+            user_comment = gets.chomp
+            new_comment = Comment.create(forum_id: selected_forum_id , contributions: user_comment)
+            
+        end
+        menu.choice "2 -Remove comment", -> do
+            choices = Comment.all.map do |comment| 
+                if comment.forum_id == selected_forum_id
+                comment.contributions
+                end
+        end
+            selected_comment_for_user = @prompt.select("Choose a comment to be deleted", choices)
+            to_be_deleted = Comment.find_by(contributions: selected_comment_for_user)
+            to_be_deleted.destroy
+        end
+       
+    
+
+        
+
+       
         menu.choice "3 -Delete forum", -> {to_destroy = Forum.find_by(forum_title: selected_forum)
         to_destroy.destroy
         }
     end
-   
 end
 
 
@@ -175,7 +194,7 @@ def grab_book_from_api(book_title)
             content_array = []
             
             content_array << new_content = @prompt.ask("What is the content?")
-            binding.pry
+            
 
             new_forum_to_forums_table(new_forum, new_content, created_book)
 
@@ -196,5 +215,12 @@ cli = BookClub.new
 cli.all_user_initial_interaction
 
 
+binding.pry
 
+ # to_be_deleted = Comment.find_by(forum_id: selected_forum_id)
+        # to_be_deleted.destroy}
 
+         # Comment.all.select do |comment| 
+        #     if forum_id = selected_forum_id
+        #         contributions
+        #     end
