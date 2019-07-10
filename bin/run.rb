@@ -54,11 +54,11 @@ def all_user_initial_interaction
             new_user_first_selection 
         end
         menu.choice "Returning", -> do 
-        returning_user_now = @prompt.ask("Please enter your user name:") 
-        @current_user = User.find_by(name: returning_user_now)
-        puts "Welcome back #{@current_user.name}!"
-        returning_user_first_selection 
-        end
+            returning_user_now = @prompt.ask("Please enter your user name:") 
+            @current_user = User.find_by(name: returning_user_now)
+            puts "Welcome back #{@current_user.name}!"
+            returning_user_first_selection 
+        end       
     end
 end
 
@@ -71,24 +71,22 @@ def returning_user_first_selection
         menu.choice "1- Create a new forum.", -> do 
             user_response = @prompt.ask("What book would you like to discuss?")
             grab_book_from_api(user_response)
-            # exit_program_method
         end
         menu.choice "2- Find a forum.", -> do 
             forum_selection
-            # exit_program_method
         end
         menu.choice "3- Update your forum.", -> do 
-            # if @current_user.forums == nil
-            #      puts "You don't have any forums to update."
-            #  end
-            all_my_forums
-            # exit_program_method
-            
-        end
-    end
-    exit_program_method
-end
+            if @current_user.forums == []
+            puts "You don't have any forums to update."
+            forum_selection
 
+            else
+            all_my_forums
+            end
+        end
+        menu.choice "4- Exit Program", -> {exit_program_method}
+    end
+end
 
 def new_user_first_selection
     @prompt.select("What would you like to do?") do |menu|
@@ -100,8 +98,8 @@ def new_user_first_selection
     end
         menu.choice "2- Find a forum.", -> do 
             forum_selection
-            # exit_program_method
         end
+        menu.choice "3- Exit Program", -> {exit_program_method}
     end
 end
 
@@ -116,23 +114,28 @@ def new_forum_to_forums_table(new_forum,new_content,new_book)
     @current_user.forums << Forum.create(forum_title: new_forum, content: new_content, book_id: new_book.id)    
 end
 
-
 def forum_selection
    choices = Forum.all.map {|forum| forum.forum_title}
    chosen_forum =  @prompt.select("Which forum would you like to choose?", choices) 
    puts Forum.find_by(forum_title: chosen_forum).content
-   content_of_chosen_forum = Forum.find_by(forum_title: chosen_forum).id
+   id_of_chosen_forum = Forum.find_by(forum_title: chosen_forum).id
 
-    variable = Forum.find_by(id: content_of_chosen_forum)
-    puts variable.comments.map {|cont| cont.contributions}       
-
+    variable = Forum.find_by(id: id_of_chosen_forum)
+    puts variable.comments.map {|cont| cont.contributions}
+       
    @prompt.select("Would you like to add a comment?") do |menu|
     menu.choice "Yes", -> do
-        user_comment = gets.chomp
-        new_comment = Comment.create(forum_id: content_of_chosen_forum , contributions: user_comment)
+        user_comment = @current_user.name + " -> " + gets.chomp
+        new_comment = Comment.create(forum_id: id_of_chosen_forum , contributions: user_comment, user_id: @current_user.id)
+        
+
+        
+        
+        
       end
     menu.choice "No", -> {returning_user_first_selection}
    end 
+   exit_program_method
 end
 
 def all_my_forums
@@ -145,23 +148,31 @@ def all_my_forums
     
     @prompt.select ("What would you like to do?:") do |menu|
         menu.choice "1 -Add comment", -> do 
-            user_comment = gets.chomp
+            user_comment = @current_user.name + " -> " + gets.chomp
             new_comment = Comment.create(forum_id: selected_forum_id , contributions: user_comment)    
         end
 
         menu.choice "2 -Remove comment", -> do
-            choices = Comment.all.map do |comment| 
-                if comment.forum_id == selected_forum_id
-                comment.contributions
-            end
-        end
+            choices = Comment.all.map {|comment| 
+            if comment.forum_id == selected_forum_id
+               puts 
+               comment.contributions 
+            end}
+        
             selected_comment_for_user = @prompt.select("Choose a comment to be deleted", choices)
             to_be_deleted = Comment.find_by(contributions: selected_comment_for_user)
             to_be_deleted.destroy
+        
         end
+    
+
+
        
         menu.choice "3 -Delete forum", -> {to_destroy = Forum.find_by(forum_title: selected_forum)
         to_destroy.destroy 
+        puts "Thanks! Your forum has been deleted."
+        returning_user_first_selection
+
         }
     end
 end
@@ -195,6 +206,7 @@ def grab_book_from_api(book_title)
             content_array << new_content = @prompt.ask("What is the content?")
             
             new_forum_to_forums_table(new_forum, new_content, created_book)
+            exit_program_method
     end
 end
 
