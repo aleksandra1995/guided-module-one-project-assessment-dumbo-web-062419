@@ -8,3 +8,4 @@ gem "require_all"
 gem "faker"
 gem "tty-prompt"
 gem "rest-client"
+gem 'colorize', '~> 0.7.3'

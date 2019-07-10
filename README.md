@@ -1,3 +1,45 @@
+Hello There! Welcome to our newest app for Book Lovers!
+
+Here are some helpful instructions:
+
+1. How to install the app:
+   - Start by cloning the repo from GitHub
+   - Open up your Terminal
+   - In your Terminal input ruby bin/run.rb
+   - Follow the steps displayed on the screen
+   - Enjoy the BookClub!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Module One Final Project
 ========================
 
