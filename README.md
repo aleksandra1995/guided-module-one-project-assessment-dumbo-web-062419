@@ -10,6 +10,17 @@ Here are some helpful instructions:
    - Enjoy the BookClub!
 
 
+THE BOOKCLUB APP
+
+As a BookClub user, I should be able to sign up for the app (as a new user), or log in if I already have an account.
+
+As a logged in new user, I should be able to create a forum based on a book selection, or see other user’s forums. I should be able to add comments to any discussion, whether created by me or another user.
+
+As a returning user, I should be able to create a new forum, search forums on the app, or update a previously created forum. If I choose to update, I will have the option to add a comment, remove any of my comments, or delete a forum I previously created.
+
+After browsing and editing content on the app, I should be given the option to exit the program and end the session. I should receive a “Goodbye and thank you for participating in our BookClub!” message upon exiting.
+
+
 
 
 
