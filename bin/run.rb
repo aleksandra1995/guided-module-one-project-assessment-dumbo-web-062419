@@ -103,26 +103,27 @@ def new_user_first_selection
             user_response = @prompt.ask("What book would you like to discuss?")
 
             grab_book_from_api(user_response)
-            # returning_user_first_selection   
-            @prompt.select("What would you like to do?") do |menu|
-                menu.choice "1- Create a new forum.", -> do 
-                    user_response = @prompt.ask("What book would you like to discuss?")
-                    grab_book_from_api(user_response)
-                end
-                menu.choice "2- Find a forum.", -> do 
-                    forum_selection
-                end
-                menu.choice "3- Update your forum.", -> do 
-                    if @current_user.forums == []
-                    puts "You don't have any forums to update.".colorize(:red)
-                    forum_selection
+            # # returning_user_first_selection   
+            # @prompt.select("What would you like to do?") do |menu|
+            #     menu.choice "1- Create a new forum.", -> do 
+            #         user_response = @prompt.ask("What book would you like to discuss?")
+            #         grab_book_from_api(user_response)
+            #     end
+            #     menu.choice "2- Find a forum.", -> do 
+            #         forum_selection
+            #     end
+            #     menu.choice "3- Update your forum.", -> do 
+            #         if @current_user.forums == []
+            #         puts "You don't have any forums to update.".colorize(:red)
+            #         forum_selection
+            #         #could this be the problem?
         
-                    else
-                    all_my_forums
-                    end
-                end
-                menu.choice "4- Exit Program", -> {exit_program_method}
-            end        
+            #         else
+            #         all_my_forums
+            #         end
+            #     end
+            #     menu.choice "4- Exit Program", -> {exit_program_method}
+            # end        
     end
         menu.choice "2- Find a forum.", -> do 
             forum_selection
