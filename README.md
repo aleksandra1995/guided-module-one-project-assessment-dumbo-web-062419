@@ -1,3 +1,6 @@
+<a href=“http://www.youtube.com/watch?feature=player_embedded&v=rTUsBFQAjX4” target=“_blank”>
+<img src=“http://img.youtube.com/v1/rTUsBFQAjX4/0.jpg” alt=“BookClub” width=“240” height=“180” border=“10” /></a>
+
 Hello There! Welcome to our newest app for Book Lovers!
 
 Here are some helpful instructions:
